@@ -1,13 +1,20 @@
 # accounts/signals.py
 from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
+from django.contrib.auth import get_user_model
 import random
+
+User = get_user_model()
 
 @receiver(user_signed_up)
 def set_username_from_social_data(request, user, sociallogin=None, **kwargs):
     if sociallogin:
         provider = sociallogin.account.provider
         extra_data = sociallogin.account.extra_data
+
+        email = user.email
+        if User.objects.filter(email=email).exclude(pk=user.pk).exists():
+            print(f"Duplicate email detected: {email}")
 
         if provider == 'google':
             # Google provides 'name', 'given_name', 'family_name'

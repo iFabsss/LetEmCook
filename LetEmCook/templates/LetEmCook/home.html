@@ -8,10 +8,12 @@
   <div class="timeline-container">
     <div class="timeline-header">
       <h1 class="instrument-sans-bold" id="home-title">Home</h1>
-      <div class="search-bar-container">
-        <i class="fa fa-search search-icon"></i>
-        <input type="text" class="search-bar" placeholder="Search for recipes, ingredients, or chefs..." />
-      </div>
+      <form method="GET" action="{% url 'search' %}" class="search-bar-form" style="width: 100%;">
+        <div class="search-bar-container">
+          <i class="fa fa-search search-icon"></i>
+          <input type="text" name="q" class="search-bar" placeholder="Search for recipes, ingredients, or chefs..." required />
+        </div>
+      </form>
     </div>
     <div class="timeline-content">
       <div id="create-recipe-container">
@@ -52,7 +54,7 @@
           {% endif %}
           <div class="recipe-tags-container">
             {% for tag in recipe.tags.all %}
-              <a href="#" class="recipe-tag">#{{ tag.name }}</a>
+              <a href="{% url 'search' %}?q=%23{{ tag.name }}" class="recipe-tag">#{{ tag.name }}</a>
             {% endfor %}
           </div>
           <div class="recipe-footer">
@@ -72,11 +74,9 @@
       <div class="right-drawer-tags-container">
         <h2 id="trending-tags">Trending Tags</h2>
         <div class="right-drawer-tags">
-          <a href="#" class="right-drawer-tag">#Italian</a>
-          <a href="#" class="right-drawer-tag">#Pizza</a>
-          <a href="#" class="right-drawer-tag">#Homemade</a>
-          <a href="#" class="right-drawer-tag">#Delicious</a>
-          <a href="#" class="right-drawer-tag">#Delicious</a>
+          {% for tag in trending_tags %}
+            <a href="{% url 'search' %}?q=%23{{ tag.name }}" class="right-drawer-tag">#{{ tag.name }}</a>
+          {% endfor %}
         </div>
       </div>
     </div>

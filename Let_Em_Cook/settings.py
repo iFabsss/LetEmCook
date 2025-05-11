@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'django.contrib.postgres',  # PostgreSQL support
     'taggit',  # Tagging support
     'django.contrib.sites',  # For Django Allauth
-
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

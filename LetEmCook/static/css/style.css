@@ -754,6 +754,18 @@ a.recipe-author-name:hover {
     cursor: pointer;
 }
 
+#search-back-btn {
+    width: 30px;
+    height: auto;
+    rotate: -90deg;
+    margin-left: 15px;
+}
+
+#search-back-btn:hover {
+    width: 35px;
+    cursor: pointer;
+}
+
 /*Recipe Page*/
 #timeline-header-recipe {
     width: 100%;
@@ -808,6 +820,11 @@ a.recipe-author-name:hover {
     gap: 10px;
 }
 
+#comment-section-header {
+    color: #333333;
+    font-weight: 700;
+}
+
 #create-comment-form {
     width: 100%;
     height: auto;
@@ -843,6 +860,11 @@ a.recipe-author-name:hover {
     border-radius: 20px;
     font-size: 1.2em;
     align-self: center;
+}
+
+#add-comment-btn:hover {
+    background-color: #FFD54F;
+    font-weight: 700;
 }
 
 #create-comment textarea {

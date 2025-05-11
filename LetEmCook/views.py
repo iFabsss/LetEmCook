@@ -4,16 +4,18 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from .models import Recipe, Comment, Profile
-from .forms import RecipeForm, CommentForm
+from .forms import RecipeForm, CommentForm, SearchForm
 from django.contrib.auth.models import User
 from taggit.models import Tag
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.core.mail import send_mail
 from django.utils import timezone
 from datetime import datetime, timedelta, timezone as std_timezone  # Import standard timezone
+from taggit.models import Tag
+from django.contrib.postgres.search import SearchVector
 
 import json
 import traceback
@@ -142,7 +144,10 @@ def home(request):
         recipe.ingredient_list = [i.strip() for i in recipe.ingredients.split(',')]
 
     form = RecipeForm()
-    return render(request, 'LetEmCook/home.html', {'recipes': recipes, 'form': form})
+
+    trending_tags = Tag.objects.annotate(num_times=Count('taggit_taggeditem_items')).order_by('-num_times')[:20]
+
+    return render(request, 'LetEmCook/home.html', {'recipes': recipes, 'form': form, 'trending_tags': trending_tags})
 
 #@login_required
 def profile(request, profile_username):
@@ -229,12 +234,29 @@ def remove_friend(request, user_id):
 
 def search(request):
     query = request.GET.get('q', '')
-    results = Recipe.objects.filter(
-        Q(title__icontains=query) | 
-        Q(description__icontains=query) |
-        Q(ingredients__icontains=query)
-    )
-    return render(request, 'search_results.html', {'results': results, 'query': query})
+
+    results = Recipe.objects.none()
+    
+    if query.startswith('#'):
+        tag = query[1:]
+        results = Recipe.objects.filter(tags__name__icontains=tag).order_by('-created_at')
+
+    elif query.startswith('@'):
+        username = query[1:]
+        results = Recipe.objects.filter(user__username__icontains=username).order_by('-created_at')
+
+    else:
+        results = Recipe.objects.filter(
+            Q(title__icontains=query) |
+            Q(description__icontains=query) |
+            Q(ingredients__icontains=query) |
+            Q(user__username__icontains=query)
+        ).order_by('-created_at')
+
+    for recipe in results:
+        recipe.ingredient_list = [i.strip() for i in recipe.ingredients.split(',')]
+
+    return render(request, 'LetEmCook/search.html', {'results': results, 'query': query})
 
 def tagged_recipes(request, tag_name):
     tag = get_object_or_404(Tag, name=tag_name)

@@ -18,6 +18,24 @@ $(document).ready(function () {
         }
     });
 
+    $("#logout-btn").click(function () {
+        if (confirm("Are you sure you want to logout?")) {
+            $.ajax({
+                url: "/logout",
+                type: "POST",
+                data: {
+                    csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val()
+                },
+                success: function () {
+                    location.href = "/";
+                },
+                error: function () {
+                    alert("Something went wrong while deleting the comment.");
+                }
+            })
+        }
+    });
+
     window.deleteComment = function (commentId) {
         if (confirm("Are you sure you want to delete your comment?")) {
             $.ajax({

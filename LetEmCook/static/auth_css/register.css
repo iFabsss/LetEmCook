@@ -111,6 +111,7 @@ form input {
 hr {
     margin: 30px 0;
 }
+
 .social-buttons {
     display: flex;
     flex-direction: column;
@@ -174,6 +175,7 @@ hr {
     padding: 0;
     z-index: 1;
     overflow: hidden;
+    width: 100%;
 }
 
 .right-panel img {
@@ -182,44 +184,26 @@ hr {
     object-fit: cover;
 }
 
-/* Overlay Text on Image */
-.overlay-text {
+/* Styles for the left-panel title */
+.right-title {
+    width: 400px;
     position: absolute;
-    right: 20%;
-    text-align: right;
-    color: white;
+    top: 50%;
+    right: 0%;
+    transform: translate(-50%, -50%);
+    color: #333333;
+    font-size: 10em;
     font-family: 'Instrument Serif', serif;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-    max-width: 80%;
-}
-
-.overlay-text h1 {
-    font-size: 120px;
+    -webkit-text-stroke: 25px #FAFAFA;
+    z-index: 2;
     margin: 0;
-    color: #FF7043;
-    letter-spacing: -6px;
+    text-align: left;
+    white-space: wrap;
+    line-height: 0.85;
 }
 
-.overlay-text h2 {
-    font-size: 100px;
-    margin: 10px 0 0 0;
-    color: #FFD54F;
-    letter-spacing: -6px;
-}
-
-.overlay-text .let {
-    font-size: 130px;
-    color: #FF7043;
-}
-
-.overlay-text .em {
-    font-size: 130px;
-    color: #ffffff;
-}
-
-.overlay-text .cook {
-    font-size: 130px;
-    color: #FFD54F;
+.fix-stroke {
+    paint-order: stroke fill;
 }
 
 .panel-icon {
@@ -235,4 +219,27 @@ hr {
     max-height: 1500px;
     /* Adjusted to match the new size */
     transform: rotate(-90deg);
+}
+
+/* Remove bullet points from messages */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Messages container */
+.messages {
+    margin-bottom: 20px;
+}
+
+/* Message styling */
+.message {
+    padding: 10px;
+    background-color: #f8d7da;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    color: #721c24;
+    font-size: 16px;
+    font-family: 'Instrument Sans', sans-serif;
 }

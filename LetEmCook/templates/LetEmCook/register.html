@@ -21,6 +21,14 @@
             <h2>Sign Up:</h2>
           </div>
 
+          {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+
           <form method="POST">
             {% csrf_token %}
 
@@ -59,10 +67,11 @@
       <!-- Right Panel (Image + Text Overlay) -->
       <div class="right-panel">
         <img src="{% static 'auth_css/4k.jpg' %}" alt="Food Background" />
-        <div class="overlay-text">
-          <h1><span class="let">Let</span> <span class="em">Em’</span></h1>
-          <h2><span class="cook">Cook</span></h2>
-        </div>
+        <h1 class="right-title">
+          <span id="let" class="fix-stroke" style="color: #FF7043;">Let</span>
+          <span id="em" class="fix-stroke">Em’</span>
+          <span id="cook" class="fix-stroke" style="color: #FFD54F;">Cook</span>
+        </h1>
       </div>
     </div>
   </body>
