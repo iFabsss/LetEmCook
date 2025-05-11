@@ -33,8 +33,8 @@ GEMINI_KEY = os.getenv('GEMINI_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = ['letemcook.onrender.com', 'localhost', '127.0.0.1']
-
+#ALLOWED_HOSTS = ['letemcook.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
 
 # Application definition
 
@@ -110,8 +110,8 @@ WSGI_APPLICATION = 'Let_Em_Cook.wsgi.application'
 else:'''
 
 DATABASES = {
-        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
-    }
+    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
+}
 
 
 # Password validation

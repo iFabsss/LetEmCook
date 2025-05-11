@@ -11,7 +11,6 @@ urlpatterns = [
     path('email_mfa/', views.email_mfa_view, name='email_mfa'),  # Email MFA page
     path('account/signup/', include('allauth.account.urls')),  # Allauth signup
     path('logout', views.logout_user, name='logout'),
-
     path('home', views.home, name='home'),
     path('profile/@<str:profile_username>', views.profile, name='profile'),
     path('recipe/<int:recipe_id>/<slug:slug>', views.recipe, name='recipe_detail'),
