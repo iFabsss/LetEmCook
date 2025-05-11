@@ -1,0 +1,69 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Let Em’ Cook - Sign Up</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'auth_css/register.css' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Instrument+Sans&display=swap" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Left Panel (Sign Up Form) -->
+      <div class="left-panel">
+        <div class="form-box">
+          <div class="signup">
+            <h2>Sign Up:</h2>
+          </div>
+
+          <form method="POST">
+            {% csrf_token %}
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required />
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+
+            <div class="form-buttons">
+              <button type="submit">Sign Up</button>
+            </div>
+
+            <div class="already-have-account">
+              <p>
+                Already have an account? <a href="{% url 'login' %}">Login here</a>
+              </p>
+            </div>
+
+            <hr />
+
+            <div class="social-buttons">
+              <a href="{% provider_login_url 'google' %}" class="github-btn">Register with Google <img src="{% static 'auth_css/google.png' %}" alt="Google" /></a>
+
+              <a href="{% provider_login_url 'github' %}" class="github-btn">Register with GitHub <img src="{% static 'auth_css/github.png' %}" alt="GitHub" /></a>
+
+              <a href="{% url 'welcome' %}"><img src="{% static 'auth_css/cone.png' %}" alt="Icon" class="panel-icon" style="cursor:pointer;" /></a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Right Panel (Image + Text Overlay) -->
+      <div class="right-panel">
+        <img src="{% static 'auth_css/4k.jpg' %}" alt="Food Background" />
+        <div class="overlay-text">
+          <h1><span class="let">Let</span> <span class="em">Em’</span></h1>
+          <h2><span class="cook">Cook</span></h2>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

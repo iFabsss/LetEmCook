@@ -1,0 +1,91 @@
+{% load static %}
+{% load socialaccount %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Let em’ Cook - Login</title>
+    <link rel="stylesheet" href="{% static 'auth_css/login-styles.css' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans&display=swap" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="left-panel">
+        <h1 class="left-title">
+          <span class="orange">Let</span> Em’<br />
+          <span class="yellow">Cook</span>
+        </h1>
+      </div>
+
+      <div class="right-panel">
+        <a href="{% url 'welcome' %}"><img src="{% static 'auth_css/cone.png' %}" alt="Icon" class="panel-icon" style="cursor:pointer;" /></a>
+
+        <div class="form-box">
+          <h2 class="h2-login">Login</h2>
+
+          {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          <form method="POST">
+            {% csrf_token %}
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+
+            <div class="form-buttons">
+              <button type="submit">Login</button>
+            </div>
+
+            <p class="center-text">
+              Don't have an account? <a href="{% url 'register' %}">Register here!</a>
+            </p>
+
+            <hr />
+
+            <div class="social-buttons">
+              <a href="{% provider_login_url 'google' %}" class="github-btn">Login with Google <img src="{% static 'auth_css/google.png' %}" alt="Google" /></a>
+
+              <a href="{% provider_login_url 'github' %}" class="github-btn">Login with GitHub <img src="{% static 'auth_css/github.png' %}" alt="GitHub" /></a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      ul.messages {
+        list-style-type: none;
+        padding: 0;
+        margin-bottom: 1em;
+        text-align: center;
+      }
+      
+      ul.messages li {
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+      }
+      
+      ul.messages li.error {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+      
+      ul.messages li.success {
+        background-color: #d4edda;
+        color: #155724;
+      }
+    </style>
+  </body>
+</html>

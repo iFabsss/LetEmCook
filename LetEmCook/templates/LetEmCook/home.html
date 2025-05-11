@@ -1,0 +1,84 @@
+{% extends 'LetEmCook/base.html' %}
+{% load static %}
+
+{% block title %}
+  Let Em Cook
+{% endblock %}
+{% block content %}
+  <div class="timeline-container">
+    <div class="timeline-header">
+      <h1 class="instrument-sans-bold" id="home-title">Home</h1>
+      <div class="search-bar-container">
+        <i class="fa fa-search search-icon"></i>
+        <input type="text" class="search-bar" placeholder="Search for recipes, ingredients, or chefs..." />
+      </div>
+    </div>
+    <div class="timeline-content">
+      <div id="create-recipe-container">
+        <img src="{{ user.profile.profile_picture.url }}" id="user-icon-create" />
+        <div id="create-recipe-child-container">
+          <span id="create-recipe-header">Got a new recipe in mind?</span>
+          <button id="create-recipe-btn">Create a Recipe</button>
+        </div>
+      </div>
+      <!-- Recipe Template -->
+      {% for recipe in recipes %}
+        <div class="recipe-container" data-href="{{ recipe.get_absolute_url }}">
+          <div class="recipe-author">
+            <img src="{{ recipe.user.profile.profile_picture.url }}" class="author-icon" />
+            <div class="recipe-author-info">
+              <a href="{% url 'profile' recipe.user.username %}" class="recipe-author-name">@{{ recipe.user }}</a>
+              <span class="recipe-date">{{ recipe.created_at|timesince }} ago</span>
+            </div>
+            {% if recipe.user == request.user %}
+              <i class="fas fa-trash-alt" onclick="deleteRecipe({{ recipe.id }})"></i>
+            {% endif %}
+          </div>
+          <div class="recipe-header">
+            <h3 class="recipe-title">{{ recipe.title }}</h3>
+            <div class="recipe-ingredients-container">
+              {% for ingredient in recipe.ingredient_list %}
+                <span class="recipe-ingredient">{{ ingredient }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="recipe-content recipe-content-timeline">
+            <span class="recipe-description">{{ recipe.description }}</span>
+          </div>
+          {% if recipe.image %}
+            <div class="recipe-image-container">
+              <img src="{{ recipe.image.url }}" class="recipe-image" alt="Recipe Image" />
+            </div>
+          {% endif %}
+          <div class="recipe-tags-container">
+            {% for tag in recipe.tags.all %}
+              <a href="#" class="recipe-tag">#{{ tag.name }}</a>
+            {% endfor %}
+          </div>
+          <div class="recipe-footer">
+            <button class="like-btn"><i class="fa fa-thumbs-up"></i>{{ recipe.likes.count }}</button>
+            <button class="comment-btn"><i class="fa fa-comment"></i>{{ recipe.comments.count }}</button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="right-drawer">
+    <div class="right-drawer-header">
+      <a href="{% url 'profile' profile_username=user.username %}" class="right-drawer-user">{{ user.username }}</a>
+      <img class="author-icon" src="{{ user.profile.profile_picture.url }}" class="right-drawer-user-icon" />
+    </div>
+    <div class="right-drawer-content">
+      <div class="right-drawer-tags-container">
+        <h2 id="trending-tags">Trending Tags</h2>
+        <div class="right-drawer-tags">
+          <a href="#" class="right-drawer-tag">#Italian</a>
+          <a href="#" class="right-drawer-tag">#Pizza</a>
+          <a href="#" class="right-drawer-tag">#Homemade</a>
+          <a href="#" class="right-drawer-tag">#Delicious</a>
+          <a href="#" class="right-drawer-tag">#Delicious</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

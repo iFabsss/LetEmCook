@@ -1,0 +1,111 @@
+{% extends 'LetEmCook/base.html' %}
+{% load static %}
+
+{% block title %}
+  Recipe | Let Em Cook
+{% endblock %}
+{% block content %}
+  <div class="timeline-container">
+    <div id="timeline-header-recipe" class="timeline-header">
+      {% if profile != request.user %}
+        <img id="back-btn" src="/media/buttonicons/candycornicon.png" onclick="window.history.back()" />
+      {% endif %}
+      <img src="{{ recipe.user.profile.profile_picture.url }}" id="recipe-author-picture" />
+      <a href="{% url 'profile' recipe.user.username %}" id="recipe-author-username">@{{ recipe.user }}</a>
+      <span id="recipe-header">RECIPE DETAILS</span>
+    </div>
+    <div class="timeline-content">
+      <!-- Recipe Template -->
+      <div class="recipe-container">
+        <div class="recipe-header">
+          <div class="recipe-title-container d-flex align-items-center justify-content-between">
+            <h3 class="recipe-title">{{ recipe.title }}</h3>
+
+            {% if recipe.user == request.user %}
+              <i class="fas fa-trash-alt" onclick="deleteRecipe({{ recipe.id }})"></i>
+            {% endif %}
+          </div>
+          <div class="recipe-ingredients-container">
+            {% for ingredient in recipe.ingredient_list %}
+              <span class="recipe-ingredient">{{ ingredient }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="recipe-content recipe-content-timeline">
+          <span class="recipe-description">{{ recipe.description }}</span>
+        </div>
+        {% if recipe.image %}
+          <div class="recipe-image-container">
+            <img src="{{ recipe.image.url }}" class="recipe-image" alt="Recipe Image" />
+          </div>
+        {% endif %}
+        <div class="recipe-tags-container">
+          {% for tag in recipe.tags.all %}
+            <a href="#" class="recipe-tag">#{{ tag.name }}</a>
+          {% endfor %}
+        </div>
+        <div class="recipe-footer">
+          <button class="like-btn"><i class="fa fa-thumbs-up"></i>{{ recipe.likes.count }}</button>
+          <button class="comment-btn"><i class="fa fa-comment"></i>{{ recipe.comments.count }}</button>
+        </div>
+        <div id="comment-section">
+          <h3 id="comment-section-header">Comments:</h3>
+          <form id="create-comment-form" method="POST" action="{% url 'add_comment' recipe.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div id="create-comment">
+              <img src="{{ user.profile.profile_picture.url }}" id="user-icon-create-comment" />
+              {{ commentForm.content }}
+              {{ commentForm.content.errors }}
+            </div>
+            <div class="d-flex align-items-center">
+              <label for="{{ commentForm.image.id_for_label }}" class="add-comment-label"><i class="fas fa-image"></i></label>
+              {{ commentForm.image }}
+              {{ commentForm.image.errors }}
+            </div>
+            <button id="add-comment-btn">Comment</button>
+          </form>
+          <div id="comment-list">
+            {% for comment in recipe.comments.all %}
+              <div class="comment-container">
+                <div class="comment-author">
+                  <img src="{{ comment.user.profile.profile_picture.url }}" class="author-icon" />
+                  <div class="comment-author-info">
+                    <a href="{% url 'profile' comment.user.username %}" class="comment-author-name">@{{ comment.user }}</a>
+                    <span class="comment-date">{{ comment.created_at|timesince }} ago</span>
+                  </div>
+                  {% if recipe.user == request.user %}
+                    <i class="fas fa-trash-alt" onclick="deleteComment({{ comment.id }})"></i>
+                  {% endif %}
+                </div>
+                <span class="recipe-description">{{ comment.content }}</span>
+                {% if comment.image %}
+                  <div class="comment-image-container">
+                    <img src="{{ comment.image.url }}" class="comment-image" alt="Recipe Image" />
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="right-drawer">
+    <div class="right-drawer-header">
+      <a href="{% url 'profile' profile_username=user.username %}" class="right-drawer-user">{{ user.username }}</a>
+      <img class="author-icon" src="{{ user.profile.profile_picture.url }}" class="right-drawer-user-icon" />
+    </div>
+    <div class="right-drawer-content">
+      <div class="right-drawer-tags-container">
+        <h2 id="trending-tags">Trending Tags</h2>
+        <div class="right-drawer-tags">
+          <a href="#" class="right-drawer-tag">#Italian</a>
+          <a href="#" class="right-drawer-tag">#Pizza</a>
+          <a href="#" class="right-drawer-tag">#Homemade</a>
+          <a href="#" class="right-drawer-tag">#Delicious</a>
+          <a href="#" class="right-drawer-tag">#Delicious</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

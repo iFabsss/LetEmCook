@@ -1,0 +1,232 @@
+body {
+    margin: 0;
+    font-family: 'Georgia', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+    position: relative;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.left-panel {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    overflow: hidden;
+    z-index: 1;
+    background-image: url('4k.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.right-panel {
+    width: 50vw;
+    height: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-top-left-radius: 80px;
+    border-bottom-left-radius: 80px;
+    background-color: #ffffff;
+    position: absolute;
+    left: 50%;
+    z-index: 2;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+}
+
+.panel-icon {
+    position: absolute;
+    top: 20px;
+    right: 10%;
+    width: 40px;
+    height: 40px;
+    transform: rotate(-90deg);
+}
+
+.form-box {
+    width: 100%;
+    max-width: 400px;
+}
+
+h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #333;
+}
+
+form label {
+    display: block;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+form input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #000;
+    padding: 10px 0;
+    font-size: 16px;
+    background-color: transparent;
+    margin-top: 10px;
+}
+
+.form-buttons {
+    margin-top: 30px;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.center-text {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-buttons button {
+    width: 115px;
+    padding: 12px;
+    border: none;
+    border-radius: 30px;
+    background-color: #FF7043;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.form-buttons button:hover {
+    background-color: #f5d7de;
+}
+
+hr {
+    margin: 30px 0;
+    width: 100%;
+    border: 0;
+    border-top: 1px solid #ddd;
+}
+
+a {
+    color: #FFD54F;
+    text-decoration: none;
+}
+
+.social-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Apply same styles to both button and a */
+.social-buttons button,
+.social-buttons a.github-btn {
+    width: 190px;
+    padding: 12px;
+    border-radius: 30px;
+    border: 1px solid black;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    color: black;
+}
+
+.social-buttons button:hover,
+.social-buttons a.github-btn:hover {
+    background-color: #f0f0f0;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.social-buttons img {
+    width: 20px;
+    height: 20px;
+}
+
+@font-face {
+    font-family: 'Instrument Serif';
+    src: url('fonts/InstrumentSerif-Regular.ttf') format('truetype');
+}
+
+/* Styles for the left-panel title */
+.left-title {
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 130px;
+    font-family: 'Instrument Serif', serif;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    z-index: 2;
+    margin: 0;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.left-title .orange {
+    color: #FF7043;
+}
+
+.left-title .yellow {
+    color: #FFD54F;
+}
+
+/* Define the class for the h2 */
+.h2-login {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 40px;
+    color: #FF7043;
+    margin-bottom: 30px;
+}
+
+form {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 20px;
+}
+
+/* Remove bullet points from messages */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Messages container */
+.messages {
+    margin-bottom: 20px;
+}
+
+/* Message styling */
+.message {
+    padding: 10px;
+    background-color: #f8d7da;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    color: #721c24;
+    font-size: 16px;
+    font-family: 'Instrument Sans', sans-serif;
+}
+

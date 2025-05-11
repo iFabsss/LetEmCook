@@ -1,0 +1,53 @@
+<!-- lecApp/templates/lecApp/email_mfa.html -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Email Verification - Let Em Cook</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+
+  <body class="bg-light">
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card shadow rounded-4">
+            <div class="card-body">
+              <h4 class="card-title text-center mb-4">Verify Your Email</h4>
+              <p class="text-muted text-center">A 6-digit verification code has been sent to your email. Please enter it below to continue.</p>
+
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+
+              <form method="post" class="mt-3">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="code" class="form-label">Verification Code</label>
+                  <input type="text" name="code" id="code" class="form-control text-center fs-4 fw-bold" maxlength="6" placeholder="Enter 6-digit code" required />
+                </div>
+                <button type="submit" class="btn btn-primary w-100 rounded-pill">Verify</button>
+              </form>
+
+              <hr />
+              <p class="text-center">
+                Didn't get the code? <a href="{% url 'email_mfa' %}">Resend Code</a> <!-- ✅ Already good -->
+
+                <!-- ✅ Namespaced -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

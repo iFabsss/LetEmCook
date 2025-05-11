@@ -1,0 +1,138 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Instrument Serif', serif;
+    display: flex;
+    height: 100vh;
+}
+
+.left-panel {
+    flex: 1;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px;
+    /* Reduced padding */
+    padding-left: 80px;
+    /* Slightly reduced left padding */
+    box-sizing: border-box;
+    /* Ensure padding doesn’t overflow */
+    margin-left: 100px;
+}
+
+.left-panel h1 {
+    font-size: 160px;
+    line-height: 0.81;
+    margin: 0;
+    font-weight: normal;
+    letter-spacing: -6px;
+    /* 👈 Slight negative letter-spacing */
+}
+
+.orange {
+    color: #FF7043;
+}
+
+.yellow {
+    color: #FFD54F;
+    /* Bright gold-yellow */
+}
+
+.left-panel p {
+    font-size: 36px;
+    margin: 20px 0;
+    line-height: 1.4;
+    letter-spacing: -1px;
+    /* Adjusted slightly for the paragraph text */
+}
+
+.buttons {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-left: 80px;
+}
+
+.buttons button {
+    padding: 12px 75px;
+    /* Slightly larger buttons */
+    border: none;
+    border-radius: 30px;
+    background-color: #fbeff2;
+    color: #000;
+    font-size: 20px;
+    /* Slightly larger text */
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+
+.buttons button:last-child {
+    background-color: #FFD54F;
+    /* Yellow color for the second button (Register) */
+}
+
+.buttons button:hover {
+    background-color: #f5d7de;
+}
+
+/* Right Panel IMAGE with border radius only on left side */
+.right-panel {
+    flex: 1;
+    overflow: hidden;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+
+    box-shadow: -15px 0 40px rgba(0, 0, 0, 0.5);
+    /* Darker & deeper shadow */
+}
+
+.right-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.button-link {
+    display: inline-block;
+    padding: 12px 75px;
+    border: none;
+    border-radius: 30px;
+    background-color: #FF7043;
+    color: #ffffff;
+    font-size: 20px;
+    text-decoration: none;
+    /* Remove underline if applied to <a> */
+    cursor: pointer;
+    transition: background 0.3s;
+    text-align: center;
+    /* Makes text centered inside inline-block */
+}
+
+.button-link:hover {
+    background-color: #f5d7de;
+}
+
+
+.button-link.register {
+    background-color: #FFC107; /* a nice yellow (material yellow) */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+/* Optional: Add a hover effect */
+.button-link.register:hover {
+    background-color: #e0a800; /* a slightly darker yellow on hover */
+    color: white; /* keep text white */
+}
