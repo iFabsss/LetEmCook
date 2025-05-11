@@ -33,7 +33,7 @@ GEMINI_KEY = os.getenv('GEMINI_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = ['https://letemcook.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['letemcook.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
