@@ -33,7 +33,7 @@ GEMINI_KEY = os.getenv('GEMINI_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['let-em-cook.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -183,11 +183,8 @@ USE_TZ = True
 
 # This tells Django where your static files live
 STATIC_URL = '/static/'
-
-# Optional but recommended for development
-STATICFILES_DIRS = [
-    BASE_DIR / "LetEmCook/static",
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
@@ -207,9 +204,12 @@ DEFAULT_FROM_EMAIL = f"Let Em Cook <{EMAIL_HOST_USER}>"
 CSRF_COOKIE_SECURE = True  # If you are in production and using HTTPS, this should be True
 CSRF_COOKIE_HTTPONLY = True  # It's usually a good idea to keep this True
 CSRF_TRUSTED_ORIGINS = [
+    'https://letemcook.onrender.com',
     'http://127.0.0.1:8000',  # Add the domain of your local server or production server here
     # Add other domains if necessary (e.g., for deployment)
 ]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
