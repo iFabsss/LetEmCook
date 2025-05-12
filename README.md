@@ -27,7 +27,7 @@ LetEmCook is a social media web application where users can share their own reci
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/LetEmCook.git
+git clone https://github.com/iFabsss/LetEmCook.git
 cd LetEmCook
 ````
 
