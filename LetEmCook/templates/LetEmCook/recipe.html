@@ -8,7 +8,7 @@
   <div class="timeline-container">
     <div id="timeline-header-recipe" class="timeline-header">
       {% if profile != request.user %}
-        <img id="back-btn" src="/media/buttonicons/candycornicon.png" onclick="window.history.back()" />
+        <img id="back-btn" src="{% static 'auth_css/cone.png' %}" onclick="window.history.back()" />
       {% endif %}
       <img src="{{ recipe.user.profile.profile_picture.url }}" id="recipe-author-picture" />
       <a href="{% url 'profile' recipe.user.username %}" id="recipe-author-username">@{{ recipe.user }}</a>

@@ -8,7 +8,7 @@
   <div class="timeline-container">
     <div id="timeline-header-profile" class="timeline-header">
       {% if profile.user != request.user %}
-        <img id="back-btn" src="/media/buttonicons/candycornicon.png" onclick="window.history.back()" />
+        <img id="back-btn" src="{% static 'auth_css/cone.png' %}" onclick="window.history.back()" />
       {% endif %}
       <img src="{{ profile.profile_picture.url }}" id="profile-picture" />
       <span id="profile-username">@{{ profile.user.username }}</span>
