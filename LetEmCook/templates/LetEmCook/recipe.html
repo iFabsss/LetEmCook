@@ -20,11 +20,11 @@
         <div class="recipe-header">
           <div class="recipe-title-container d-flex align-items-center justify-content-between">
             <h3 class="recipe-title">{{ recipe.title }}</h3>
-
             {% if recipe.user == request.user %}
               <i class="fas fa-trash-alt" onclick="deleteRecipe({{ recipe.id }})"></i>
             {% endif %}
           </div>
+          <span class="recipe-date">{{ recipe.created_at|timesince }} ago</span>
           <div class="recipe-ingredients-container">
             {% for ingredient in recipe.ingredient_list %}
               <span class="recipe-ingredient">{{ ingredient }}</span>
