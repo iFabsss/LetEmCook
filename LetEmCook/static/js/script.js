@@ -136,9 +136,5 @@ $(document).ready(function () {
                 alert("Error occurred while generating tags.");
             }
         });
-
     }
-
-
-
 });

@@ -222,12 +222,11 @@ else:
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_SIGNATURE_NAME='s3v4'
     AWS_S3_REGION_NAME = 'ap-southeast-2'
-    AWS_QUERYSTRING_AUTH = False 
-
     AWS_S3_FILE_OVERWRITE = False
-    AWS_DEFAULT_ACL = 'public-read'
-    AWS_S3_ADDRESSING_STYLE = 'path'
+    AWS_DEFAULT_ACL = None
+    AWS_S3_VERITY = True
 
     MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/'
 

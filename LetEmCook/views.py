@@ -310,7 +310,7 @@ def generate_tags(request):
         title = request.POST.get('title')
         ingredients = request.POST.get('ingredients')
         description = request.POST.get('description')
-        prompt = f"Do not return any explanation, just the string that contains the tags that are comma-separated. Generate SEO-friendly product tags (comma-separated). Generate tags for a recipe called {title} with the following ingredients: {ingredients}. The description of the recipe is: {description}. "
+        prompt = f"Do not return any explanation, just the string that contains the tags that are comma-separated.Generate SEO-friendly product tags (comma-separated). Generate tags for a recipe called {title} with the following ingredients: {ingredients}. The description of the recipe is: {description}. "
         
         try:
             bot_response = model.generate_content(prompt)
