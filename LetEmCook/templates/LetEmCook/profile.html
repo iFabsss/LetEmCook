@@ -10,7 +10,15 @@
       {% if profile.user != request.user %}
         <img id="back-btn" src="{% static 'auth_css/cone.png' %}" onclick="window.history.back()" />
       {% endif %}
-      <img src="{{ profile.profile_picture.url }}" id="profile-picture" />
+      <form id="profile-pic-form" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <img src="{{ profile.profile_picture.url }}" id="profile-picture" />
+
+        {% if profile.user == request.user %}
+          <label for="id_profile_picture" class="edit-profile-pic-btn">Edit</label>
+          <input type="file" name="profile_picture" id="id_profile_picture" accept="image/*" style="display: none;" onchange="document.getElementById('profile-pic-form').submit();" />
+        {% endif %}
+      </form>
       <span id="profile-username">@{{ profile.user.username }}</span>
       <span id="profile-email">{{ profile.user.email }}</span>
       <div id="profile-bio-container">

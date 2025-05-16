@@ -157,6 +157,13 @@ def profile(request, profile_username):
     for recipe in recipes:
         recipe.ingredient_list = [i.strip() for i in recipe.ingredients.split(',')]
     friends = profile.friendship.all()
+
+    if request.method == 'POST' and profile.user == request.user:
+        if 'profile_picture' in request.FILES:
+            profile.profile_picture = request.FILES['profile_picture']
+            profile.save()
+            return redirect('profile', profile_username)
+
     return render(request, 'LetEmCook/profile.html', {'profile': profile, 'recipes': recipes, 'friends': friends})
 
 def recipe(request, recipe_id, slug=None):
