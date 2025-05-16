@@ -7,6 +7,7 @@ from django.utils.text import slugify
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.files.uploadedfile import UploadedFile
 import random
 import uuid
 import boto3
@@ -33,43 +34,6 @@ class Recipe(models.Model):
     likes = models.ManyToManyField(User, related_name='liked_recipes', blank=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            base_slug = slugify(self.title)
-            slug = base_slug
-            counter = 1
-            while Recipe.objects.filter(slug=slug).exists():
-                slug = f"{base_slug}-{counter}"
-                counter += 1
-            self.slug = slug
-        super().save(*args, **kwargs)
-
-        # Upload image to S3 if new image is provided
-        if self.image and not self.image.name.startswith(f"{settings.MEDIA_URL}"):
-            s3 = boto3.client(
-                's3',
-                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-                region_name=settings.AWS_S3_REGION_NAME
-            )
-
-            image_content = self.image.read()
-            s3_key = f'recipes/{self.image.name.split("/")[-1]}'
-
-            s3.upload_fileobj(
-                Fileobj=self.image.file,
-                Bucket=settings.AWS_STORAGE_BUCKET_NAME,
-                Key=s3_key,
-                ExtraArgs={
-                    'ACL': 'public-read',
-                    'ContentType': self.image.file.content_type
-                }
-            )
-
-            # Set the image URL to the public S3 URL
-            self.image.name = f'{settings.MEDIA_URL}/{s3_key}'
-            super().save(update_fields=['image'])
-
     def __str__(self):
         return self.title
     
@@ -82,37 +46,9 @@ class Comment(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
     content = models.TextField(blank=False, null=False)
-    image = models.ImageField(upload_to='comments/images/', blank=True, null=True)
+    image = models.ImageField(upload_to='comments/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
-    def save(self, *args, **kwargs):
-     # Upload image to S3 if new image is provided
-        if self.image and not self.image.name.startswith(f"{settings.MEDIA_URL}"):
-            s3 = boto3.client(
-                's3',
-                aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-                aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-                region_name=settings.AWS_S3_REGION_NAME
-            )
-
-            image_content = self.image.read()
-            s3_key = f'recipes/{self.image.name.split("/")[-1]}'
-
-            s3.upload_fileobj(
-                Fileobj=self.image.file,
-                Bucket=settings.AWS_STORAGE_BUCKET_NAME,
-                Key=s3_key,
-                ExtraArgs={
-                    'ACL': 'public-read',
-                    'ContentType': self.image.file.content_type
-                }
-            )
-
-            # Set the image URL to the public S3 URL
-            self.image.name = f'{settings.MEDIA_URL}/{s3_key}'
-            super().save(update_fields=['image'])
 
     def __str__(self):
         return f'Comment by {self.user.username} on {self.recipe.title}'

@@ -200,11 +200,20 @@ def delete_recipe(request, recipe_id):
 def add_comment(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if request.method == 'POST':
-        content = request.POST['content']
-        image = request.FILES.get('image', None)
-        Comment.objects.create(recipe=recipe, user=request.user, content=content, image=image)
+        form = CommentForm(request.POST, request.FILES)
+        print("POST:", request.POST)
+        print("FILES:", request.FILES)
 
-        return redirect('recipe_detail', recipe_id=recipe.id, slug=recipe.slug)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.recipe = recipe
+            comment.user = request.user
+            comment.save()
+            print("Comment saved:", comment)
+        else:
+            print("Form errors:", form.errors)
+
+    return redirect('recipe_detail', recipe_id=recipe.id, slug=recipe.slug)
 
 @login_required
 def delete_comment(request, comment_id):
