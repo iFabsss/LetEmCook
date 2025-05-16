@@ -16,6 +16,7 @@ from django.utils import timezone
 from datetime import datetime, timedelta, timezone as std_timezone  # Import standard timezone
 from taggit.models import Tag
 from django.contrib.postgres.search import SearchVector
+from django.core.exceptions import ObjectDoesNotExist
 
 import json
 import traceback
@@ -219,8 +220,14 @@ def add_comment(request, recipe_id):
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id, user=request.user)
     if request.method == 'POST':
-        recipe_id = comment.recipe.id
-        recipe_slug = comment.recipe.slug
+        try:
+            recipe_id = comment.recipe.id
+            recipe_slug = comment.recipe.slug
+        except ObjectDoesNotExist:
+            # Recipe was already deleted; redirect to home
+            comment.delete()
+            messages.success(request, 'Comment deleted successfully.')
+            return redirect('home')
         comment.delete()
         messages.success(request, 'Comment deleted successfully.')
         return redirect('recipe_detail', recipe_id=recipe_id, slug=recipe_slug)
