@@ -1,4 +1,3 @@
-````markdown
 # 🍳 LetEmCook
 
 LetEmCook is a social media web application where users can share their own recipes or generate creative recipes with the help of AI. With features powered by **Google's Gemini AI**, users can input a title and ingredients, and LetEmCook will automatically generate detailed descriptions, instructions, and tags.
@@ -29,7 +28,7 @@ LetEmCook is a social media web application where users can share their own reci
 ```bash
 git clone https://github.com/iFabsss/LetEmCook.git
 cd LetEmCook
-````
+```
 
 ### 2. Set Up Your Environment
 
