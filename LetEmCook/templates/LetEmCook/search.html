@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class="recipe-content recipe-content-timeline">
-            <span class="recipe-description">{{ recipe.description }}</span>
+            <span class="recipe-description">{{ recipe.description|linebreaksbr }}</span>
           </div>
           {% if recipe.image %}
             <div class="recipe-image-container">
