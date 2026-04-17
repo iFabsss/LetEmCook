@@ -228,6 +228,7 @@ STORAGES = {
     },
 }
 
-MEDIA_URL = 'https://letemcook-media.s3.ap-southeast-2.amazonaws.com/'
+#MEDIA_URL = 'https://letemcook-media.s3.ap-southeast-2.amazonaws.com/'
+MEDIA_URL = 'media/'
 
 SITE_ID = int(os.getenv('SITE_ID', 1))
