@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <!-- Link to your custom CSS if you have one -->
+    <link rel="stylesheet" type="text/css" href="{% static 'social_css/signup.css' %}" />
+  </head>
+  <body>
+    <div class="signup-container">
+      <h2>Sign Up</h2>
+
+      <!-- Signup form -->
+      <form method="post">
+        {% csrf_token %}
+
+        <!-- Display form fields -->
+        <div class="form-field">
+          <label for="id_username">Username</label>
+          {{ form.username }}
+        </div>
+
+        <div class="form-field">
+          <label for="id_email">Email</label>
+          {{ form.email }}
+        </div>
+
+        <div class="form-field">
+          <label for="id_password1">Password</label>
+          {{ form.password1 }}
+        </div>
+
+        <div class="form-field">
+          <label for="id_password2">Confirm Password</label>
+          {{ form.password2 }}
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit">Sign Up</button>
+      </form>
+
+      <!-- Link to login page -->
+      <p>
+        Already have an account? <a href="{% url 'account:login' %}">Login</a>
+      </p>
+    </div>
+  </body>
+</html>

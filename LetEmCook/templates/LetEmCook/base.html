@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-100">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        Let Em Cook
+      {% endblock %}
+    </title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+  </head>
+  <body>
+    <div id="main-container" class="instrument-sans-regular">
+      <div id="drawer-container" class="drawer-container">
+        <a href="{% url 'home' %}" id="logo" class="instrument-serif-regular">
+          <span id="let">Let</span>&nbsp;
+          <span id="em">Em'</span>&nbsp;
+          <span id="cook">Cook</span>&nbsp;
+        </a>
+        <nav id="drawer-nav" class="drawer-nav navigation">
+          <a href="{% url 'home' %}" class="drawer-tab {% if request.path == '/home' %} active {% endif %}"><i class="fa-solid fa-house"></i>home</a>
+          <a href="{% url 'profile' profile_username=user.username %}" class="drawer-tab {% if request.path == '/profile/@'|add:user.username %}active{% endif %}"><i class="fa-solid fa-user"></i>profile</a>
+          <a href="#" class="drawer-tab"><i class="fa-solid fa-users"></i>friends</a>
+          <a href="#" class="drawer-tab"><i class="fa-solid fa-gear"></i>setting</a>
+          <Button class="btn btn-primary" id="logout-btn">logout</Button>
+        </nav>
+      </div>
+      <div id="content-container" class="content-container" style="letter-spacing: 0em;">
+        {% block content %}
+
+        {% endblock %}
+      </div>
+      <div id="recipe-form-container">
+        <h1>Add a Recipe</h1>
+        <form id="recipe-form" method="POST" action="addRecipe" enctype="multipart/form-data" class="d-flex flex-column">
+          {% csrf_token %}
+
+          <div class="form-element">
+            <label for="{{ form.title.id_for_label }}" class="form-label">Recipe Name:</label>
+            {{ form.title }}
+          </div>
+          {{ form.title.errors }}
+
+          <div class="form-element">
+            <label for="{{ form.ingredients.id_for_label }}" class="form-label">Ingredients:</label>
+            {{ form.ingredients }}
+          </div>
+          {{ form.ingredients.errors }}
+
+          <div class="d-flex flex-column form-element-column" style="width: 100%; gap: 5px;">
+            <div class="form-element">
+              <label for="{{ form.description.id_for_label }}" class="form-label">Description:</label>
+              <button type="button" id="autogenerate-description-btn" class="autogenerate-btn" onclick="generateDescription()">Generate Description</button>
+            </div>
+            {{ form.description }}
+            {{ form.description.errors }}
+          </div>
+
+          <div class="form-element">
+            <label for="{{ form.image.id_for_label }}" class="form-label">Recipe Image:</label>
+            {{ form.image }}
+          </div>
+          {{ form.image.errors }}
+
+          <div class="d-flex flex-column form-element-column" style="width: 100%; gap: 5px;">
+            <div class="form-element">
+              <label for="{{ form.tags.id_for_label }}" class="form-label">Tags:</label>
+              <button type="button" id="autogenerate-tags-btn" class="autogenerate-btn" onclick="generateTags()">Generate Tags</button>
+            </div>
+            {{ form.tags }}
+            {{ form.tags.errors }}
+          </div>
+
+          <div id="submit-container">
+            <button type="submit" id="add-recipe-btn">Add Recipe</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

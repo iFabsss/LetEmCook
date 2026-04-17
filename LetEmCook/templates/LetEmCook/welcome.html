@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Let Em’ Cook</title>
+    <link rel="stylesheet" href="{% static 'auth_css/styles.css' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="left-panel">
+      <h1>
+        <span class="orange">Let</span> Em’<br />
+        <span class="yellow">Cook</span>
+      </h1>
+      <p>
+        Personalized AI Recipe<br />Social Platform
+      </p>
+      <div class="buttons">
+        <a href="{% url 'login' %}" class="button-link">Login</a>
+        <a href="{% url 'register' %}" class="button-link register">Register</a>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <img src="{% static 'auth_css/4k.jpg' %}" alt="Food Image" />
+    </div>
+  </body>
+</html>
